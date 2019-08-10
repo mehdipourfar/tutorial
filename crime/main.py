@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import csv
 
 def get_items_from_csv(file_path):
