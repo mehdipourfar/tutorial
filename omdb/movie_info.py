@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python3
 
 import sys
@@ -10,26 +11,31 @@ API_KEY = "f4c7dec0"
 class Movie:
     def __init__(self, title):
         self.title = title
-        self._data = {}
-        self.year = self.data['Year']
-        self.title = self.data['Title']
-        self.director = self.data['Director']
-        self.plot = self.data['Plot']
-        self.genres = self.data['Genre'].split(', ')
-        self.actors = self.data['Actors'].split(', ')
+        self.error = self.movie_data.get('Error', None)
+        if self.error:
+            return
+        self.year = self.movie_data['Year']
+        self.title = self.movie_data['Title']
+        self.director = self.movie_data['Director']
+        self.plot = self.movie_data['Plot']
+        self.genres = self.movie_data['Genre'].split(', ')
+        self.actors = self.movie_data['Actors'].split(', ')
 
     @property
     def url(self):
         return f'{BASE_URL}?t={self.title}&apikey={API_KEY}'
 
     @property
-    def data(self):
-        if not self._data:
+    def movie_data(self):
+        if not hasattr(self, '_data'):
             response = requests.get(self.url)
             self._data = response.json()
         return self._data
 
     def print_movie(self):
+        if self.error:
+            print(self.error)
+            return
         genres = ', '.join(self.genres)
         actors = ', '.join(self.actors)
         print(f"""
