@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import csv
+from pprint import pprint
 
 def get_items_from_csv(file_path):
     items = []
@@ -39,8 +40,31 @@ class CrimeStatistics:
             [item['population'] for item in self.crimes]
         )
 
+    def crime_sum_per_population(self):
+        result = []
+        for i in self.crimes:
+            crimes_sum = (
+                i['murder'] + i['robbery'] + i['assault']
+                + i['burglary'] + i['car_theft']
+            )
+            percent = (crimes_sum / i['population']) * 100.
+
+            result.append({
+                'year': i['year'],
+                'percent': round(percent, 2)
+            })
+
+        return result
+
+    def print_murder_with_car_theft_comparison(self):
+        for i in self.crimes:
+            year = i['year']
+            more_murder = i['murder'] > i['car_theft']
+            print(f'{year}: {more_murder}')
 
 if __name__ == '__main__':
     crimes = get_items_from_csv('./crime.csv')
     stats = CrimeStatistics(crimes)
     print(stats.get_average_population())
+    pprint(stats.crime_sum_per_population())
+    stats.print_murder_with_car_theft_comparison()
