@@ -1,0 +1,16 @@
+<html>
+  <head>
+    <title>Our Great Weblog</title>
+  </head>
+  <body>
+    <ul>
+      {% for post in posts %}
+      <li>
+        <h3>{{ post.title }}</h3>
+        <img src={{post.image_path }} />
+        <p> {{ post.body|truncatewords:10 }}</p>
+      </li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>

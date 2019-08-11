@@ -10,11 +10,21 @@ class Category(models.Model):
         max_length=50
     )
 
+    class Meta:
+        verbose_name = 'Category'
+        verbose_name_plural = 'Categories'
+
+    def __str__(self):
+        return f'({self.id}) {self.name}'
+
 
 class Tag(models.Model):
     name = models.CharField(
         max_length=50
     )
+
+    def __str__(self):
+        return f'({self.id}) {self.name}'
 
 
 class Post(models.Model):
@@ -47,6 +57,13 @@ class Post(models.Model):
         blank=True,
     )
 
+    def __str__(self):
+        return f'({self.id}) {self.title}'
+
+    @property
+    def image_path(self):
+        return self.image.path if self.image else ''
+
 
 class Comment(models.Model):
     post = models.ForeignKey(
@@ -62,6 +79,9 @@ class Comment(models.Model):
     )
     body = models.TextField()
 
+
+    def __str__(self):
+        return f'({self.id} {self.body[:20]})'
 
 class ButtonAction(models.Model):
     """
@@ -90,3 +110,6 @@ class ButtonAction(models.Model):
         unique_together = [
             'post', 'user'
         ]
+
+    def __str__(self):
+        return f'({self.id}) {self.action_type}'
