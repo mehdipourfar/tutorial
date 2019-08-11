@@ -9,9 +9,6 @@ def index(request):
     latest_questions = Question.objects.order_by(
         '-id'
     )[:5]
-    output = ', '.join([
-        q.question_text for q in latest_questions
-    ])
     return render(
         request,
         'polls/index.html',
