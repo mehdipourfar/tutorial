@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 from .models import Post
 
@@ -14,4 +14,12 @@ def index(request):
     )
 
 def detail(request, id):
-    pass
+    post = get_object_or_404(
+        Post.objects.filter(published=True),
+        id=id
+    )
+    return render(
+        request,
+        'post/detail.html',
+        {'post': post}
+    )

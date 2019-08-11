@@ -1,0 +1,21 @@
+<html>
+  <head>
+    <title>{{ post.title }}</title>
+  </head>
+  <body>
+    <h1>{{ post.title }}</h1>
+    <h3>{{ post.category }}</h3>
+    <h3>{{ post.created_at }}</h3>
+    <div>
+      <p>{{ post.body }}</p>
+    </div>
+    {% if post.tags.all %}
+    <span>Tags:</span>
+    <ul>
+      {% for tag in post.tags.all %}
+      <li>{{ tag.name }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </body>
+</html>
