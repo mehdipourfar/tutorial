@@ -43,6 +43,7 @@ class Post(models.Model):
         blank=True,
     )
     image = models.ImageField(
+        upload_to='post_images',
         blank=True,
         default=''
     )
@@ -62,7 +63,7 @@ class Post(models.Model):
 
     @property
     def image_path(self):
-        return self.image.path if self.image else ''
+        return self.image.url if self.image else ''
 
 
 class Comment(models.Model):
